@@ -1,8 +1,8 @@
 #-----------------------------------------------#
 ################### PATHS #######################
 #-----------------------------------------------#
-HEAD_PATH	=	./#includes/
-SRCS_PATH	=	./#scr/
+HEAD_PATH	=	./#include/
+SRCS_PATH	=	./#src/
 OBJ_PATH	=	./objects/
 
 #-----------------------------------------------#
@@ -36,7 +36,7 @@ FLAGS = -Wall -Wextra -Werror -std=c++17 #-lglfw -lvulkan -ldl -lpthread -lX11 -
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	$(CC) $(FLAGS) $^ -o $(NAME) -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
+	$(CC) $(FLAGS) $^ -o $(NAME) -lglfw -lGL -lGLEW -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 $(OBJ_PATH):
 	mkdir -p $@
