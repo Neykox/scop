@@ -35,16 +35,16 @@ FLAGS = #-Wall -Wextra -Werror -std=c++17 #-lglfw -lvulkan -ldl -lpthread -lX11 
 
 all : $(NAME)
 
-$(NAME) : $(GLAD_BS) $(OBJ)
+$(NAME) : $(OBJ)
+	mv glad.o ./objects
 	$(CC) $(FLAGS) $^ -o $(NAME) -lglfw -lGL -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
-
-$(GLAD_BS) :
-	gcc -c -std=c99 -o glad.o src/glad.c
 
 $(OBJ_PATH):
 	mkdir -p $@
 
 $(OBJ_PATH)%.o : $(SRCS_PATH)%.cpp
+	gcc -c -std=c99 -o glad.o src/glad.c
+	mv glad.o objects/
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(OBJ) : Makefile $(HEADERS) | $(OBJ_PATH)

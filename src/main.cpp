@@ -47,6 +47,8 @@ int main() {
         else
             glClearColor(0.0f, 1.0f, 1.0f, 1.0f); // Cyan
 
+        glClear(GL_COLOR_BUFFER_BIT);
+
         // Swap front and back buffers
         glfwSwapBuffers(window);
 
