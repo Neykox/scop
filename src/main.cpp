@@ -39,6 +39,13 @@ int main() {
     // Loop until the user closes the window
     while (!glfwWindowShouldClose(window)) {
         // Render here
+        // Set the clear color based on the current color
+        if (currentColor == 0)
+            glClearColor(0.5f, 0.0f, 0.5f, 1.0f); // Purple
+        else if (currentColor == 1)
+            glClearColor(1.0f, 0.5f, 0.0f, 1.0f); // Orange
+        else
+            glClearColor(0.0f, 1.0f, 1.0f, 1.0f); // Cyan
 
         // Swap front and back buffers
         glfwSwapBuffers(window);

@@ -8,7 +8,7 @@ OBJ_PATH	=	./objects/
 #-----------------------------------------------#
 ################## SOURCES ######################
 #-----------------------------------------------#
-SRCS_NAME =		main.cpp
+SRCS_NAME =		main.cpp glad.cpp
 OBJ_NAME = ${SRCS_NAME:.cpp=.o}
 
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
@@ -17,7 +17,7 @@ SRC = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 #-----------------------------------------------#
 ################## HEADERS ######################
 #-----------------------------------------------#
-HEADERS =
+HEADERS = include/scop.hpp
 
 #-----------------------------------------------#
 ################### OTHER #######################
@@ -25,7 +25,7 @@ HEADERS =
 
 NAME = scop
 
-CC = c++
+CC = g++
 
 FLAGS = #-Wall -Wextra -Werror -std=c++17 #-lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
@@ -35,8 +35,11 @@ FLAGS = #-Wall -Wextra -Werror -std=c++17 #-lglfw -lvulkan -ldl -lpthread -lX11 
 
 all : $(NAME)
 
-$(NAME) : $(OBJ)
+$(NAME) : $(GLAD_BS) $(OBJ)
 	$(CC) $(FLAGS) $^ -o $(NAME) -lglfw3 -lGL -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
+
+$(GLAD_BS) :
+	gcc -c -std=c99 -o glad.o src/glad.c
 
 $(OBJ_PATH):
 	mkdir -p $@
