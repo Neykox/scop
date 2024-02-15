@@ -36,7 +36,6 @@ FLAGS = #-Wall -Wextra -Werror -std=c++17 #-lglfw -lvulkan -ldl -lpthread -lX11 
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	mv glad.o ./objects
 	$(CC) $(FLAGS) $^ -o $(NAME) -lglfw -lGL -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 $(OBJ_PATH):
