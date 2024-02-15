@@ -36,7 +36,7 @@ FLAGS = #-Wall -Wextra -Werror -std=c++17 #-lglfw -lvulkan -ldl -lpthread -lX11 
 all : $(NAME)
 
 $(NAME) : $(GLAD_BS) $(OBJ)
-	$(CC) $(FLAGS) $^ -o $(NAME) -lglfw3 -lGL -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
+	$(CC) $(FLAGS) $^ -o $(NAME) -lglfw -lGL -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 $(GLAD_BS) :
 	gcc -c -std=c99 -o glad.o src/glad.c
