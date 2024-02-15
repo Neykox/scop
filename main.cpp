@@ -1,41 +1,51 @@
-#include <GL/glew.h>
+#include <SDL.h>
 #include <GLFW/glfw3.h>
 
 // Current color
 int currentColor = 0;
 
 // Key callback function
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
-    if (key == GLFW_KEY_W && action == GLFW_PRESS)
-        currentColor = (currentColor + 1) % 3;
+void handle_key(SDL_Event event) {
+    if (event.type == SDL_KEYDOWN) {
+        switch (event.key.keysym.sym) {
+            case SDLK_ESCAPE:
+                SDL_Quit();
+                exit(0);
+            case SDLK_w:
+                currentColor = (currentColor + 1) % 3;
+        }
+    }
 }
 
 int main() {
     // Initialize the library
-    if (!glfwInit())
-        return -1;
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
+        return 1;
+    }
 
     // Create a windowed mode window and its OpenGL context
-    GLFWwindow* window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    SDL_Window* window = SDL_CreateWindow("Hello World", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_OPENGL);
     if (!window) {
-        glfwTerminate();
-        return -1;
+        SDL_Log("Could not create window: %s", SDL_GetError());
+        SDL_Quit();
+        return 1;
     }
 
     // Make the window's context current
-    glfwMakeContextCurrent(window);
-
-    // Set key callback
-    glfwSetKeyCallback(window, key_callback);
-
-    // Initialize GLEW
-    if (glewInit() != GLEW_OK)
-        return -1;
+    SDL_GLContext context = SDL_GL_CreateContext(window);
 
     // Loop until the user closes the window
-    while (!glfwWindowShouldClose(window)) {
+    SDL_Event event;
+    while (1) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                SDL_Quit();
+                return 0;
+            }
+            handle_key(event);
+        }
+
         // Set the clear color based on the current color
         if (currentColor == 0)
             glClearColor(0.5f, 0.0f, 0.5f, 1.0f); // Purple
@@ -48,12 +58,9 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Swap front and back buffers
-        glfwSwapBuffers(window);
-
-        // Poll for and process events
-        glfwPollEvents();
+        SDL_GL_SwapWindow(window);
     }
 
-    glfwTerminate();
+    SDL_Quit();
     return 0;
 }
