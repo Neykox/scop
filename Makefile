@@ -1,8 +1,8 @@
 #-----------------------------------------------#
 ################### PATHS #######################
 #-----------------------------------------------#
-HEAD_PATH	=	./#include/
-SRCS_PATH	=	./#src/
+HEAD_PATH	=	./include/
+SRCS_PATH	=	./src/
 OBJ_PATH	=	./objects/
 
 #-----------------------------------------------#
@@ -27,7 +27,7 @@ NAME = scop
 
 CC = c++
 
-FLAGS = -Wall -Wextra -Werror -std=c++17 #-lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
+FLAGS = #-Wall -Wextra -Werror -std=c++17 #-lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 #-----------------------------------------------#
 ################### RULES #######################
@@ -36,7 +36,7 @@ FLAGS = -Wall -Wextra -Werror -std=c++17 #-lglfw -lvulkan -ldl -lpthread -lX11 -
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	$(CC) $(FLAGS) $^ -o $(NAME) -lSDL2 -lGL -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
+	$(CC) $(FLAGS) $^ -o $(NAME) -lglfw3 -lGL -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 $(OBJ_PATH):
 	mkdir -p $@
