@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <GLFW/glfw3.h>
 
 // Current color
