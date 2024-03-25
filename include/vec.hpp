@@ -6,7 +6,7 @@
 
 class Vec
 {
-	private:
+	public:
 	float x, y, z, w;
 
 	public:

@@ -2,8 +2,8 @@
 //tuto with square
 
 #include "../include/scop.hpp"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+// #include <glad/glad.h>
+// #include <GLFW/glfw3.h>
 
 #include <iostream>
 
@@ -27,7 +27,7 @@ const char *fragmentShaderSource = "#version 330 core\n"
 	"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 	"}\n\0";
 
-int main()
+int main(int argc, char **argv)
 {
 	std::vector<Vec> vec;
 	// int i = 0;
@@ -52,18 +52,18 @@ int main()
 		if (line.substr(0, 2) == "v ") {
 			// Parse the line into x, y, z
 			char* lineCStr = new char[line.length() + 1];
-			std::strcpy(lineCStr, line.c_str());
-			char* token = std::strtok(lineCStr, " ");
+			strcpy(lineCStr, line.c_str());
+			char* token = strtok(lineCStr, " ");
 			if (token == nullptr) {
 				std::cerr << "Failed to parse line: " << line << '\n';
 				delete[] lineCStr;
 				continue;
 			}
-			token = std::strtok(nullptr, " ");
+			token = strtok(nullptr, " ");
 			float x = std::stof(token ? token : "0");
-			token = std::strtok(nullptr, " ");
+			token = strtok(nullptr, " ");
 			float y = std::stof(token ? token : "0");
-			token = std::strtok(nullptr, " ");
+			token = strtok(nullptr, " ");
 			float z = std::stof(token ? token : "0");
 
 			// Add the vertex to the vector

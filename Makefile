@@ -8,7 +8,7 @@ OBJ_PATH	=	./objects/
 #-----------------------------------------------#
 ################## SOURCES ######################
 #-----------------------------------------------#
-SRCS_NAME =		main.cpp #glad.cpp
+SRCS_NAME =		main2.cpp glad.cpp
 OBJ_NAME = ${SRCS_NAME:.cpp=.o}
 
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
@@ -36,12 +36,14 @@ FLAGS = #-Wall -Wextra -Werror -std=c++17 #-lglfw -lvulkan -ldl -lpthread -lX11 
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	$(CC) $(FLAGS) $^ -o $(NAME)
+	$(CC) $(FLAGS) $^ -o $(NAME) -lglfw -lGL -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 $(OBJ_PATH):
 	mkdir -p $@
 
 $(OBJ_PATH)%.o : $(SRCS_PATH)%.cpp
+	gcc -c -std=c99 -o glad.o src/glad.c
+	mv glad.o objects/
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(OBJ) : Makefile $(HEADERS) | $(OBJ_PATH)
