@@ -7,17 +7,17 @@
 class Vec
 {
 	public:
-	float x, y, z, w;
+	float x, y, z;
 
 	public:
 		// Default constructor
-		Vec() : x(0), y(0), z(0), w(1.0f){}
+		Vec() : x(0), y(0), z(0) {}
 
 		// Parameterized constructor
-		Vec(float x, float y, float z) : x(x), y(y), z(z), w(1.0f){}
+		Vec(float x, float y, float z) : x(x), y(y), z(z) {}
 
 		// Copy constructor
-		Vec(const Vec& other) : x(other.x), y(other.y), z(other.z), w(1.0f){}
+		Vec(const Vec& other) : x(other.x), y(other.y), z(other.z) {}
 
 		// Destructor
 		~Vec() {}
@@ -28,7 +28,6 @@ class Vec
 				x = other.x;
 				y = other.y;
 				z = other.z;
-				w = 1.0f;
 			}
 			return *this;
 		}
