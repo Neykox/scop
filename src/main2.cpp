@@ -72,10 +72,15 @@ int main(int argc, char **argv)
 		}
 	}
 
-	// std::cout << "Read " << vec.size() << " vertices.\n";
-	// std::cout << "vec.size = " << vec.size() << '\n';
-	// for (int i = 0; i < vec.size(); i++)
-	// 	std::cout << vec[i] << '\n';
+	for (Vec& v : vec)
+	{
+		v.normalize();
+	}
+
+	std::cout << "Read " << vec.size() << " vertices.\n";
+	std::cout << "vec.size = " << vec.size() << '\n';
+	for (int i = 0; i < vec.size(); i++)
+		std::cout << vec[i] << '\n';
 
 	// glfw: initialize and configure
 	// ------------------------------
@@ -210,7 +215,7 @@ int main(int argc, char **argv)
 		// draw our first triangle
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawArrays(GL_TRIANGLES, 0, vec.size());// * 3);
 		// glBindVertexArray(0); // no need to unbind it every time 
  
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
