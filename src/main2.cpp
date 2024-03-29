@@ -16,15 +16,19 @@ const unsigned int SCR_HEIGHT = 600;
 
 const char *vertexShaderSource = "#version 330 core\n"
 	"layout (location = 0) in vec3 aPos;\n"
+	"layout (location = 1) in vec3 aColor;\n"
+	"out vec3 ourColor;\n"
 	"void main()\n"
 	"{\n"
 	"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+	"	ourColor = aColor;\n"
 	"}\0";
 const char *fragmentShaderSource = "#version 330 core\n"
 	"out vec4 FragColor;\n"
+	"in vec3 ourColor;\n"
 	"void main()\n"
 	"{\n"
-	"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+	"   FragColor = vec4(ourColor, 1.0f);\n"
 	"}\n\0";
 
 int main(int argc, char **argv)
@@ -74,13 +78,17 @@ int main(int argc, char **argv)
 
 	for (Vec& v : vec)
 	{
-		v.normalize();
+		std::cout << "b " << v << '\n';
+		//dont know about that one chief
+		//if (v.x > 1 || v.x < -1 || v.y > 1 || v.y < -1 || v.z > 1 || v.z < -1)
+			v.normalize();
+		std::cout << "a " << v << "\n\n";
 	}
 
-	std::cout << "Read " << vec.size() << " vertices.\n";
-	std::cout << "vec.size = " << vec.size() << '\n';
-	for (int i = 0; i < vec.size(); i++)
-		std::cout << vec[i] << '\n';
+	// std::cout << "Read " << vec.size() << " vertices.\n";
+	// std::cout << "vec.size = " << vec.size() << '\n';
+	// for (int i = 0; i < vec.size(); i++)
+	// 	std::cout << vec[i] << '\n';
 
 	// glfw: initialize and configure
 	// ------------------------------
@@ -165,12 +173,47 @@ int main(int argc, char **argv)
 	// 	 -0.5f, -0.5f, 0.0f,
 	// 	 -0.5f, 0.5f, 0.0f
 	// }; 
-	float* vertices = new float[vec.size() * 3];  // Each Vec has 3 components
+	// float* vertices = new float[vec.size() * 3];  // Each Vec has 3 components
 
-	for (size_t i = 0; i < vec.size(); ++i) {
-		vertices[i * 3] = vec[i].x;
-		vertices[i * 3 + 1] = vec[i].y;
-		vertices[i * 3 + 2] = vec[i].z;
+	// for (size_t i = 0; i < vec.size(); ++i) {
+	// 	vertices[i * 3] = vec[i].x;
+	// 	vertices[i * 3 + 1] = vec[i].y;
+	// 	vertices[i * 3 + 2] = vec[i].z;
+	// }
+
+	float vertices[vec.size() * 6];
+	for (int i = 0, v = 0, c = 0; i < vec.size() * 6; i = i + 6, v++)
+	{
+		vertices[i] = vec[v].x;
+		vertices[i + 1] = vec[v].y;
+		vertices[i + 2] = vec[v].z;
+		if (c == 0)
+		{
+			vertices[i + 3] = 1;
+			vertices[i + 4] = 0;
+			vertices[i + 5] = 0;
+			c++;
+		}
+		else if (c == 1)
+		{
+			vertices[i + 3] = 0;
+			vertices[i + 4] = 1;
+			vertices[i + 5] = 0;
+			c++;
+		}
+		else
+		{
+			vertices[i + 3] = 0;
+			vertices[i + 4] = 0;
+			vertices[i + 5] = 1;
+			c = 0;
+		}
+	}
+
+	std::cout << "vertices = \n";
+	for (int i = 0; i < vec.size() * 6; i = i + 6)
+	{
+		std::cout << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] <<"\n";
 	}
 
 	unsigned int VBO, VAO;
@@ -182,11 +225,14 @@ int main(int argc, char **argv)
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
 	// modified draw call
-	// glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glBufferData(GL_ARRAY_BUFFER, vec.size() * 3 * sizeof(float), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	//glBufferData(GL_ARRAY_BUFFER, vec.size() * 3 * sizeof(float), vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0); 
@@ -197,7 +243,7 @@ int main(int argc, char **argv)
 
 
 	// uncomment this call to draw in wireframe polygons.
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	// render loop
 	// -----------
@@ -233,7 +279,7 @@ int main(int argc, char **argv)
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
 	glfwTerminate();
-	delete[] vertices;
+	// delete[] vertices;
 	return 0;
 }
 
