@@ -81,6 +81,7 @@ int main(int argc, char **argv)
 		std::cout << "b " << v << '\n';
 		//dont know about that one chief
 		//if (v.x > 1 || v.x < -1 || v.y > 1 || v.y < -1 || v.z > 1 || v.z < -1)
+		if(v.x != 0 && v.y != 0 && v.z != 0)
 			v.normalize();
 		std::cout << "a " << v << "\n\n";
 	}
@@ -243,7 +244,7 @@ int main(int argc, char **argv)
 
 
 	// uncomment this call to draw in wireframe polygons.
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	// render loop
 	// -----------
