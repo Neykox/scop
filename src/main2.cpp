@@ -58,7 +58,12 @@ int main(int argc, char **argv)
 
    // Read the file line by line
 	std::string line;
+	std::string objName;
 	while (std::getline(file, line)) {
+		// Check if the line starts with 'o'
+		if (line.substr(0, 2) == "o ")
+			objName = line.substr(2);
+
 		// Check if the line starts with 'v'
 		if (line.substr(0, 2) == "v ") {
 			// Parse the line into x, y, z
@@ -111,7 +116,7 @@ int main(int argc, char **argv)
 
 	// glfw window creation
 	// --------------------
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, objName.empty() ? "Namen't" : objName.c_str(), NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -332,6 +337,7 @@ int main(int argc, char **argv)
 	// ------------------------------------------------------------------
 	glfwTerminate();
 	// delete[] vertices;
+	file.close();
 	return 0;
 }
 

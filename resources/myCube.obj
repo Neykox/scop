@@ -1,3 +1,7 @@
+# Blender v2.71 (sub 0) OBJ File: '42.blend'
+# www.blender.org
+mtllib myCube.mtl
+o myCube
 v -1.0f -1.0f -1.0f  // triangle 1 : begin
 v -1.0f -1.0f  1.0f 
 v -1.0f  1.0f  1.0f  // triangle 1 : end
