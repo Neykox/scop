@@ -27,7 +27,7 @@ const char *vertexShaderSource = "#version 330 core\n"
 	"{\n"
 	"   //gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
 	"	//Output position of the vertex, in clip space : MVP * position\n"
-	"	gl_Position =  MVP * vec4(vertexPosition_modelspace,1);\n"
+	"	gl_Position =  MVP * vec4(aPos,1);\n"
 	"	ourColor = aColor;\n"
 	"}\0";
 const char *fragmentShaderSource = "#version 330 core\n"
@@ -83,15 +83,15 @@ int main(int argc, char **argv)
 		}
 	}
 
-	// for (Vec& v : vec)
-	// {
-	// 	std::cout << "b " << v << '\n';
-	// 	//dont know about that one chief
-	// 	//if (v.x > 1 || v.x < -1 || v.y > 1 || v.y < -1 || v.z > 1 || v.z < -1)
-	// 	if(v.x != 0 && v.y != 0 && v.z != 0)
-	// 		v.normalize();
-	// 	std::cout << "a " << v << "\n\n";
-	// }
+	for (Vec& v : vec)
+	{
+		std::cout << "b " << v << '\n';
+		//dont know about that one chief
+		//if (v.x > 1 || v.x < -1 || v.y > 1 || v.y < -1 || v.z > 1 || v.z < -1)
+		if(v.x != 0 && v.y != 0 && v.z != 0)
+			v.normalize();
+		std::cout << "a " << v << "\n\n";
+	}
 
 	// std::cout << "Read " << vec.size() << " vertices.\n";
 	// std::cout << "vec.size = " << vec.size() << '\n';
@@ -197,22 +197,22 @@ int main(int argc, char **argv)
 		vertices[i + 2] = vec[v].z;
 		if (c == 0)
 		{
-			vertices[i + 3] = 1;
+			vertices[i + 3] = 0.87;
 			vertices[i + 4] = 0;
-			vertices[i + 5] = 0;
+			vertices[i + 5] = 1;
 			c++;
 		}
 		else if (c == 1)
 		{
-			vertices[i + 3] = 0;
+			vertices[i + 3] = 1;
 			vertices[i + 4] = 1;
-			vertices[i + 5] = 0;
+			vertices[i + 5] = 1;
 			c++;
 		}
 		else
 		{
 			vertices[i + 3] = 0;
-			vertices[i + 4] = 0;
+			vertices[i + 4] = 1;
 			vertices[i + 5] = 1;
 			c = 0;
 		}
@@ -273,7 +273,7 @@ int main(int argc, char **argv)
 	glDepthFunc(GL_LESS);
 
 	// Get a handle for our "MVP" uniform
-	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
+	GLuint MatrixID = glGetUniformLocation(shaderProgram, "MVP");
 
 	// Projection matrix : 45� Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 	glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
