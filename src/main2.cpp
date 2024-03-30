@@ -76,15 +76,15 @@ int main(int argc, char **argv)
 		}
 	}
 
-	for (Vec& v : vec)
-	{
-		std::cout << "b " << v << '\n';
-		//dont know about that one chief
-		//if (v.x > 1 || v.x < -1 || v.y > 1 || v.y < -1 || v.z > 1 || v.z < -1)
-		if(v.x != 0 && v.y != 0 && v.z != 0)
-			v.normalize();
-		std::cout << "a " << v << "\n\n";
-	}
+	// for (Vec& v : vec)
+	// {
+	// 	std::cout << "b " << v << '\n';
+	// 	//dont know about that one chief
+	// 	//if (v.x > 1 || v.x < -1 || v.y > 1 || v.y < -1 || v.z > 1 || v.z < -1)
+	// 	if(v.x != 0 && v.y != 0 && v.z != 0)
+	// 		v.normalize();
+	// 	std::cout << "a " << v << "\n\n";
+	// }
 
 	// std::cout << "Read " << vec.size() << " vertices.\n";
 	// std::cout << "vec.size = " << vec.size() << '\n';
@@ -209,9 +209,23 @@ int main(int argc, char **argv)
 			vertices[i + 5] = 1;
 			c = 0;
 		}
+
+		//black and white
+		// if (vec[v].z < 0)
+		// {
+		// 	vertices[i + 3] = 0;
+		// 	vertices[i + 4] = 0;
+		// 	vertices[i + 5] = 0;
+		// }
+		// else
+		// {
+		// 	vertices[i + 3] = 1;
+		// 	vertices[i + 4] = 1;
+		// 	vertices[i + 5] = 1;
+		// }
 	}
 
-	std::cout << "vertices = \n";
+	std::cout << "vec.size() = " << vec.size() << " | vertices = \n";
 	for (int i = 0; i < vec.size() * 6; i = i + 6)
 	{
 		std::cout << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] <<"\n";
@@ -246,6 +260,11 @@ int main(int argc, char **argv)
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	// Enable depth test
+	glEnable(GL_DEPTH_TEST);
+	// Accept fragment if it closer to the camera than the former one
+	glDepthFunc(GL_LESS);
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -257,7 +276,7 @@ int main(int argc, char **argv)
 		// render
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// draw our first triangle
 		glUseProgram(shaderProgram);
