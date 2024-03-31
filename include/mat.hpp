@@ -7,37 +7,44 @@
 
 class Mat4 {
 public:
-	float data[16];
+	float data[4][4];
 
 	Mat4() {
-		for (int i = 0; i < 16; i++) {
-			data[i] = 0.0f;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				data[i][j] = 0.0f;
+			}
 		}
 	}
 
 	Mat4(float p) {
-		for (int i = 0; i < 16; i++) {
-			data[i] = 0.0f;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				data[i][j] = 0.0f;
+			}
 		}
-		data[0] = data[5] = data[10] = p;
-		data[15] = 1.0f;
+		data[0][0] = data[1][1] = data[2][2] = p;
+		data[3][3] = 1.0f;
 	}
 
 	Mat4(float x, float y, float z) {
-		for (int i = 0; i < 16; i++) {
-			data[i] = 0.0f;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				data[i][j] = 0.0f;
+			}
 		}
-		data[0] = x;
-		data[5] = y;
-		data[10] = z;
-		data[15] = 1.0f;
+		data[0][0] = x;
+		data[1][1] = y;
+		data[2][2] = z;
+		data[3][3] = 1.0f;
 	}
 
-	Mat4& operator=(const Mat4& other)
-	{
+	Mat4& operator=(const Mat4& other) {
 		if (this != &other) {
-			for (int i = 0; i < 16; i++) {
-				data[i] = other.data[i];
+			for (int i = 0; i < 4; i++) {
+				for (int j = 0; j < 4; j++) {
+					data[i][j] = other.data[i][j];
+				}
 			}
 		}
 		return *this;
@@ -45,37 +52,40 @@ public:
 
 	static Mat4 identity() {
 		Mat4 m;
-		m.data[0] = m.data[5] = m.data[10] = m.data[15] = 1.0f;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				m.data[i][j] = i == j ? 1.0f : 0.0f;
+			}
+		}
 		return m;
 	}
 
 	Mat4 operator*(const Mat4& other) const {
 		Mat4 result;
-		for (int y = 0; y < 4; y++) {
-			for (int x = 0; x < 4; x++) {
-				float sum = 0.0f;
-				for (int e = 0; e < 4; e++) {
-					sum += data[e + y * 4] * other.data[x + e * 4];
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				result.data[i][j] = 0.0f;
+				for (int k = 0; k < 4; ++k) {
+					result.data[i][j] += this->data[i][k] * other.data[k][j];
 				}
-				result.data[x + y * 4] = sum;
 			}
 		}
 		return result;
-	}
+}
 
-	static Mat4 translate(float x, float y, float z) {
+	static Mat4 translate(float tx, float ty, float tz) {
 		Mat4 m = identity();
-		m.data[12] = x;
-		m.data[13] = y;
-		m.data[14] = z;
+		m[3][0] = tx;
+		m[3][1] = ty;
+		m[3][2] = tz;
 		return m;
 	}
 
-	static Mat4 scale(float x, float y, float z) {
+	static Mat4 scale(float sx, float sy, float sz) {
 		Mat4 m = identity();
-		m[0] = x;
-		m[5] = y;
-		m[10] = z;
+		m[0][0] = sx;
+		m[1][1] = sy;
+		m[2][2] = sz;
 		return m;
 	}
 
@@ -85,38 +95,22 @@ public:
 	}
 
 	// Updated rotate function
-	static Mat4 rotate(float angleX, float angleY, float angleZ)
-	{
-		angleX = toRadians(angleX);
-		angleY = toRadians(angleY);
-		angleZ = toRadians(angleZ);
-
+	static Mat4 rotate(float rx, float ry, float rz) {
 		Mat4 m = identity();
+		float cosx = cos(rx), sinx = sin(rx);
+		float cosy = cos(ry), siny = sin(ry);
+		float cosz = cos(rz), sinz = sin(rz);
 
-		// Rotation matrix for x-axis
-		if (angleX != 0.0f)
-		{
-			m.data[5] = cos(angleX);
-			m.data[6] = -sin(angleX);
-			m.data[9] = sin(angleX);
-			m.data[10] = cos(angleX);
-		}
-		// Rotation matrix for y-axis
-		if (angleY != 0.0f)
-		{
-			m.data[0] = cos(angleY);
-			m.data[2] = sin(angleY);
-			m.data[8] = -sin(angleY);
-			m.data[10] = cos(angleY);
-		}
-		// Rotation matrix for z-axis
-		if (angleZ != 0.0f)
-		{
-			m.data[0] = cos(angleZ);
-			m.data[1] = -sin(angleZ);
-			m.data[4] = sin(angleZ);
-			m.data[5] = cos(angleZ);
-		}
+		m[0][0] = cosy * cosz;
+		m[0][1] = -cosy * sinz;
+		m[0][2] = siny;
+		m[1][0] = sinx * siny * cosz + cosx * sinz;
+		m[1][1] = -sinx * siny * sinz + cosx * cosz;
+		m[1][2] = -sinx * cosy;
+		m[2][0] = -cosx * siny * cosz + sinx * sinz;
+		m[2][1] = cosx * siny * sinz + sinx * cosz;
+		m[2][2] = cosx * cosy;
+
 		return m;
 	}
 
@@ -125,11 +119,11 @@ public:
 		Mat4 m;
 		float tanHalfFov = tan(fov / 2.0f);
 
-		m.data[0] = 1.0f / (aspect * tanHalfFov);
-		m.data[5] = 1.0f / tanHalfFov;
-		m.data[10] = -(far + near) / (far - near);
-		m.data[11] = -1.0f;
-		m.data[14] = -(2.0f * far * near) / (far - near);
+		m.data[0][0] = 1.0f / (aspect * tanHalfFov);
+		m.data[1][1] = 1.0f / tanHalfFov;
+		m.data[2][2] = -(far + near) / (far - near);
+		m.data[2][3] = -1.0f;
+		m.data[3][2] = -(2.0f * far * near) / (far - near);
 		return m;
 	}
 
@@ -140,22 +134,22 @@ public:
 		Vec yaxis = zaxis.cross(xaxis);
 
 		Mat4 m;
-		m.data[0] = xaxis.x;
-		m.data[1] = yaxis.x;
-		m.data[2] = zaxis.x;
-		m.data[3] = 0.0f;
-		m.data[4] = xaxis.y;
-		m.data[5] = yaxis.y;
-		m.data[6] = zaxis.y;
-		m.data[7] = 0.0f;
-		m.data[8] = xaxis.z;
-		m.data[9] = yaxis.z;
-		m.data[10] = zaxis.z;
-		m.data[11] = 0.0f;
-		m.data[12] = -xaxis.dot(position);
-		m.data[13] = -yaxis.dot(position);
-		m.data[14] = -zaxis.dot(position);
-		m.data[15] = 1.0f;
+		m.data[0][0] = xaxis.x;
+		m.data[1][0] = yaxis.x;
+		m.data[2][0] = zaxis.x;
+		m.data[3][0] = 0.0f;
+		m.data[0][1] = xaxis.y;
+		m.data[1][1] = yaxis.y;
+		m.data[2][1] = zaxis.y;
+		m.data[3][1] = 0.0f;
+		m.data[0][2] = xaxis.z;
+		m.data[1][2] = yaxis.z;
+		m.data[2][2] = zaxis.z;
+		m.data[3][2] = 0.0f;
+		m.data[0][3] = -xaxis.dot(position);
+		m.data[1][3] = -yaxis.dot(position);
+		m.data[2][3] = -zaxis.dot(position);
+		m.data[3][3] = 1.0f;
 		return m;
 	}
 
@@ -171,13 +165,13 @@ public:
 		return degrees * (M_PI / 180.0f);
 	}
 
-	float& operator[](int index) {
-		return data[index];
-	}
+	// float& operator[](int index) {
+	// 	return data[index];
+	// }
 
-	const float& operator[](int index) const {
-		return data[index];
-	}
+	// const float& operator[](int index) const {
+	// 	return data[index];
+	// }
 
 	// float* operator[](int index) {
 	// 	return data + index * 4;
@@ -186,6 +180,14 @@ public:
 	// const float* operator[](int index) const {
 	// 	return data + index * 4;
 	// }
+
+	float* operator[](int index) {
+		return data[index];
+	}
+
+	const float* operator[](int index) const {
+		return data[index];
+	}
 };
 
 #endif
