@@ -1,7 +1,7 @@
 #ifndef MAT_HPP
 # define MAT_HPP
 
-#include "include/scop.hpp"
+#include "scop.hpp"
 
 #define M_PI 3.14159265358979323846
 
@@ -73,9 +73,9 @@ public:
 
 	static Mat4 scale(float x, float y, float z) {
 		Mat4 m = identity();
-		m.data[0] = x;
-		m.data[5] = y;
-		m.data[10] = z;
+		m[0] = x;
+		m[5] = y;
+		m[10] = z;
 		return m;
 	}
 
@@ -135,8 +135,8 @@ public:
 
 	// View matrix
 	static Mat4 lookAt(const Vec& position, const Vec& target, const Vec& up) {
-		Vec zaxis = (position - target).normalize();
-		Vec xaxis = up.cross(zaxis).normalize();
+		Vec zaxis = (position - target).normalized();
+		Vec xaxis = up.cross(zaxis).normalized();
 		Vec yaxis = zaxis.cross(xaxis);
 
 		Mat4 m;
@@ -169,6 +169,22 @@ public:
 
 	static float radians(float degrees) {
 		return degrees * M_PI / 180.0f;
+	}
+
+	float& operator[](int index) {
+		return data[index];
+	}
+
+	const float& operator[](int index) const {
+		return data[index];
+	}
+
+	float* operator[](int index) {
+		return data + index * 4;
+	}
+
+	const float* operator[](int index) const {
+		return data + index * 4;
 	}
 };
 
