@@ -4,6 +4,7 @@
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include "vec.hpp"
+#include "mat.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>

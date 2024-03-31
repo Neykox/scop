@@ -8,7 +8,7 @@ OBJ_PATH	=	./objects/
 #-----------------------------------------------#
 ################## SOURCES ######################
 #-----------------------------------------------#
-SRCS_NAME =		main2.cpp glad.cpp
+SRCS_NAME =		main2.cpp glad.cpp mat.cpp
 OBJ_NAME = ${SRCS_NAME:.cpp=.o}
 
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

@@ -40,10 +40,35 @@ class Vec
 			z /= length;
 		}
 
+		// Returns a new, normalized vector
+		Vec normalized() const {
+			float length = sqrt(x * x + y * y + z * z);
+			return Vec(x / length, y / length, z / length);
+		}
+
 		// Overload operator<<
 		friend std::ostream& operator<<(std::ostream& os, const Vec& vec) {
 			os  << vec.x << ", " << vec.y << ", " << vec.z;
 			return os;
+		}
+
+		// Vector subtraction
+		Vec operator-(const Vec& other) const {
+			return Vec(x - other.x, y - other.y, z - other.z);
+		}
+
+		// Cross product
+		Vec cross(const Vec& other) const {
+			return Vec(
+				y * other.z - z * other.y,
+				z * other.x - x * other.z,
+				x * other.y - y * other.x
+			);
+		}
+
+		// Dot product
+		float dot(const Vec& other) const {
+			return x * other.x + y * other.y + z * other.z;
 		}
 };
 

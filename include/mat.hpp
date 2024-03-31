@@ -1,3 +1,6 @@
+#ifndef MAT_HPP
+# define MAT_HPP
+
 #include "include/scop.hpp"
 
 #define M_PI 3.14159265358979323846
@@ -116,4 +119,57 @@ public:
 		}
 		return m;
 	}
+
+	// Projection matrix
+	static Mat4 perspective(float fov, float aspect, float near, float far) {
+		Mat4 m;
+		float tanHalfFov = tan(fov / 2.0f);
+
+		m.data[0] = 1.0f / (aspect * tanHalfFov);
+		m.data[5] = 1.0f / tanHalfFov;
+		m.data[10] = -(far + near) / (far - near);
+		m.data[11] = -1.0f;
+		m.data[14] = -(2.0f * far * near) / (far - near);
+		return m;
+	}
+
+	// View matrix
+	static Mat4 lookAt(const Vec& position, const Vec& target, const Vec& up) {
+		Vec zaxis = (position - target).normalize();
+		Vec xaxis = up.cross(zaxis).normalize();
+		Vec yaxis = zaxis.cross(xaxis);
+
+		Mat4 m;
+		m.data[0] = xaxis.x;
+		m.data[1] = yaxis.x;
+		m.data[2] = zaxis.x;
+		m.data[3] = 0.0f;
+		m.data[4] = xaxis.y;
+		m.data[5] = yaxis.y;
+		m.data[6] = zaxis.y;
+		m.data[7] = 0.0f;
+		m.data[8] = xaxis.z;
+		m.data[9] = yaxis.z;
+		m.data[10] = zaxis.z;
+		m.data[11] = 0.0f;
+		m.data[12] = -xaxis.dot(position);
+		m.data[13] = -yaxis.dot(position);
+		m.data[14] = -zaxis.dot(position);
+		m.data[15] = 1.0f;
+		return m;
+	}
+
+	// Model matrix
+	static Mat4 model(const Vec& position, const Vec& scale, const Vec& rotation) {
+		Mat4 m = translate(position.x, position.y, position.z);
+		m = m * scale(scale.x, scale.y, scale.z);
+		m = m * rotate(rotation.x, rotation.y, rotation.z);
+		return m;
+	}
+
+	static float radians(float degrees) {
+		return degrees * M_PI / 180.0f;
+	}
 };
+
+#endif
