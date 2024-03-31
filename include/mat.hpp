@@ -160,15 +160,15 @@ public:
 	}
 
 	// Model matrix
-	static Mat4 model(const Vec& position, const Vec& scale, const Vec& rotation) {
+	static Mat4 model(const Vec& position, const Vec& _scale, const Vec& rotation) {
 		Mat4 m = translate(position.x, position.y, position.z);
-		m = m * scale(scale.x, scale.y, scale.z);
+		m = m * scale(_scale.x, _scale.y, _scale.z);
 		m = m * rotate(rotation.x, rotation.y, rotation.z);
 		return m;
 	}
 
 	static float radians(float degrees) {
-		return degrees * M_PI / 180.0f;
+		return degrees * (M_PI / 180.0f);
 	}
 
 	float& operator[](int index) {
@@ -179,13 +179,13 @@ public:
 		return data[index];
 	}
 
-	float* operator[](int index) {
-		return data + index * 4;
-	}
+	// float* operator[](int index) {
+	// 	return data + index * 4;
+	// }
 
-	const float* operator[](int index) const {
-		return data + index * 4;
-	}
+	// const float* operator[](int index) const {
+	// 	return data + index * 4;
+	// }
 };
 
 #endif

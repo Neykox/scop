@@ -294,7 +294,7 @@ int main(int argc, char **argv)
 	// Model matrix : an identity matrix (model will be at the origin)
 	Mat4 Model      = Mat4(1.0f);
 	// Our ModelViewProjection : multiplication of our 3 matrices
-	Mat4 MVP        = Projection * View * Model; // Remember, matrix multiplication is the other way around
+	Mat4 mvp        = Projection * View * Model; // Remember, matrix multiplication is the other way around
 
 
 	// render loop
@@ -315,7 +315,7 @@ int main(int argc, char **argv)
 
 		// Send our transformation to the currently bound shader, 
 		// in the "MVP" uniform
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
 		glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 		glDrawArrays(GL_TRIANGLES, 0, vec.size());// * 3);
