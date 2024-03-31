@@ -188,6 +188,16 @@ public:
 	const float* operator[](int index) const {
 		return data[index];
 	}
+
+	Mat4 transpose(const Mat4& matrix) {
+		Mat4 result;
+		for(int i = 0; i < 4; ++i) {
+			for(int j = 0; j < 4; ++j) {
+				result[i][j] = matrix[j][i];
+			}
+		}
+		return result;
+	}
 };
 
 #endif

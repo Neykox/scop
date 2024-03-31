@@ -295,7 +295,7 @@ int main(int argc, char **argv)
 	Mat4 Model      = Mat4(1.0f);
 	// Our ModelViewProjection : multiplication of our 3 matrices
 	Mat4 mvp        = Projection * View * Model; // Remember, matrix multiplication is the other way around
-
+	Mat4 nmvp = Mat4::transpose(mvp);
 
 	// render loop
 	// -----------
