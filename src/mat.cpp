@@ -12,6 +12,34 @@ public:
 		}
 	}
 
+	Mat4(float p) {
+		for (int i = 0; i < 16; i++) {
+			data[i] = 0.0f;
+		}
+		data[0] = data[5] = data[10] = p;
+		data[15] = 1.0f;
+	}
+
+	Mat4(float x, float y, float z) {
+		for (int i = 0; i < 16; i++) {
+			data[i] = 0.0f;
+		}
+		data[0] = x;
+		data[5] = y;
+		data[10] = z;
+		data[15] = 1.0f;
+	}
+
+	Mat4& operator=(const Mat4& other)
+	{
+		if (this != &other) {
+			for (int i = 0; i < 16; i++) {
+				data[i] = other.data[i];
+			}
+		}
+		return *this;
+	}
+
 	static Mat4 identity() {
 		Mat4 m;
 		m.data[0] = m.data[5] = m.data[10] = m.data[15] = 1.0f;
