@@ -86,15 +86,15 @@ int main(int argc, char **argv)
 		}
 	}
 
-	for (Vec& v : vec)
-	{
-		std::cout << "b " << v << '\n';
-		//dont know about that one chief
-		//if (v.x > 1 || v.x < -1 || v.y > 1 || v.y < -1 || v.z > 1 || v.z < -1)
-		if(v.x != 0 && v.y != 0 && v.z != 0)
-			v.normalize();
-		std::cout << "a " << v << "\n\n";
-	}
+	// for (Vec& v : vec)
+	// {
+	// 	std::cout << "b " << v << '\n';
+	// 	//dont know about that one chief
+	// 	//if (v.x > 1 || v.x < -1 || v.y > 1 || v.y < -1 || v.z > 1 || v.z < -1)
+	// 	if(v.x != 0 && v.y != 0 && v.z != 0)
+	// 		v.normalize();
+	// 	std::cout << "a " << v << "\n\n";
+	// }
 
 	// std::cout << "Read " << vec.size() << " vertices.\n";
 	// std::cout << "vec.size = " << vec.size() << '\n';
@@ -181,12 +181,12 @@ int main(int argc, char **argv)
     //      0.0f,  0.5f, 0.0f  // top   
     // };
 
-    float vertices[] = {
-        // positions         // colors
-        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
-        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
-        0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
-    }; 
+    // float vertices[] = {
+    //     // positions         // colors
+    //     0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
+    //     -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
+    //     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
+    // }; 
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -200,54 +200,54 @@ int main(int argc, char **argv)
 	// 	 -0.5f, 0.5f, 0.0f
 	// };
 
-    // float vertices[vec.size() * 6];
-	// for (int i = 0, v = 0, c = 0; i < vec.size() * 6; i = i + 6, v++)
-	// {
-	// 	vertices[i] = vec[v].x;
-	// 	vertices[i + 1] = vec[v].y;
-	// 	vertices[i + 2] = vec[v].z;
-	// 	if (c == 0)
-	// 	{
-	// 		vertices[i + 3] = 0.87;
-	// 		vertices[i + 4] = 0;
-	// 		vertices[i + 5] = 1;
-	// 		c++;
-	// 	}
-	// 	else if (c == 1)
-	// 	{
-	// 		vertices[i + 3] = 1;
-	// 		vertices[i + 4] = 1;
-	// 		vertices[i + 5] = 1;
-	// 		c++;
-	// 	}
-	// 	else
-	// 	{
-	// 		vertices[i + 3] = 0;
-	// 		vertices[i + 4] = 1;
-	// 		vertices[i + 5] = 1;
-	// 		c = 0;
-	// 	}
+    float vertices[vec.size() * 6];
+	for (int i = 0, v = 0, c = 0; i < vec.size() * 6; i = i + 6, v++)
+	{
+		vertices[i] = vec[v].x;
+		vertices[i + 1] = vec[v].y;
+		vertices[i + 2] = vec[v].z;
+		if (c == 0)
+		{
+			vertices[i + 3] = 0.87;
+			vertices[i + 4] = 0;
+			vertices[i + 5] = 1;
+			c++;
+		}
+		else if (c == 1)
+		{
+			vertices[i + 3] = 1;
+			vertices[i + 4] = 1;
+			vertices[i + 5] = 1;
+			c++;
+		}
+		else
+		{
+			vertices[i + 3] = 0;
+			vertices[i + 4] = 1;
+			vertices[i + 5] = 1;
+			c = 0;
+		}
 
-	// 	//black and white
-	// 	// if (vec[v].z < 0)
-	// 	// {
-	// 	// 	vertices[i + 3] = 0;
-	// 	// 	vertices[i + 4] = 0;
-	// 	// 	vertices[i + 5] = 0;
-	// 	// }
-	// 	// else
-	// 	// {
-	// 	// 	vertices[i + 3] = 1;
-	// 	// 	vertices[i + 4] = 1;
-	// 	// 	vertices[i + 5] = 1;
-	// 	// }
-	// }
+		//black and white
+		// if (vec[v].z < 0)
+		// {
+		// 	vertices[i + 3] = 0;
+		// 	vertices[i + 4] = 0;
+		// 	vertices[i + 5] = 0;
+		// }
+		// else
+		// {
+		// 	vertices[i + 3] = 1;
+		// 	vertices[i + 4] = 1;
+		// 	vertices[i + 5] = 1;
+		// }
+	}
 
-	// std::cout << "vec.size() = " << vec.size() << " | vertices = \n";
-	// for (int i = 0; i < vec.size() * 6; i = i + 6)
-	// {
-	// 	std::cout << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] <<"\n";
-	// }
+	std::cout << "vec.size() = " << vec.size() << " | vertices = \n";
+	for (int i = 0; i < vec.size() * 6; i = i + 6)
+	{
+		std::cout << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] <<"\n";
+	}
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -298,7 +298,7 @@ int main(int argc, char **argv)
         // draw our first triangle
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, vec.size());
         // glBindVertexArray(0); // no need to unbind it every time 
  
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
