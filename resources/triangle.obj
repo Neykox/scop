@@ -1,0 +1,4 @@
+o myTriangle
+v -0.5f, -0.5f, 0.0f, // left  
+v 0.5f, -0.5f, 0.0f, // right 
+v 0.0f,  0.5f, 0.0f
