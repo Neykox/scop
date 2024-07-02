@@ -1,0 +1,16 @@
+# Blender v2.71 (sub 0) OBJ File: '42.blend'
+# www.blender.org
+mtllib myCube.mtl
+o threeTriangles
+
+v -0.5f -0.5f 0f
+v -0.25f 0.5f 0f
+v 0f -0.5f 0f
+
+v -0.25f 0.5f 0f
+v 0f -0.5f 0f
+v 0.25f 0.5f 0f
+
+v 0.5f -0.5f 0f
+v 0.25f 0.5f 0f
+v 0f -0.5f 0f
