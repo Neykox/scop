@@ -2,39 +2,39 @@
 # www.blender.org
 mtllib myCube.mtl
 o myCube
-v -1.0f -1.0f -1.0f  // triangle 1 : begin
-v -1.0f -1.0f  1.0f 
-v -1.0f  1.0f  1.0f  // triangle 1 : end
-v 1.0f  1.0f -1.0f  // triangle 2 : begin
-v -1.0f -1.0f -1.0f 
-v -1.0f  1.0f -1.0f  // triangle 2 : end
-v 1.0f -1.0f  1.0f 
-v -1.0f -1.0f -1.0f 
-v 1.0f -1.0f -1.0f 
-v 1.0f  1.0f -1.0f 
-v 1.0f -1.0f -1.0f 
-v -1.0f -1.0f -1.0f 
-v -1.0f -1.0f -1.0f 
-v -1.0f  1.0f  1.0f 
-v -1.0f  1.0f -1.0f 
-v 1.0f -1.0f  1.0f 
-v -1.0f -1.0f  1.0f 
-v -1.0f -1.0f -1.0f 
-v -1.0f  1.0f  1.0f 
-v -1.0f -1.0f  1.0f 
-v 1.0f -1.0f  1.0f 
-v 1.0f  1.0f  1.0f 
-v 1.0f -1.0f -1.0f 
-v 1.0f  1.0f -1.0f 
-v 1.0f -1.0f -1.0f 
-v 1.0f  1.0f  1.0f 
-v 1.0f -1.0f  1.0f 
-v 1.0f  1.0f  1.0f 
-v 1.0f  1.0f -1.0f 
-v -1.0f  1.0f -1.0f 
-v 1.0f  1.0f  1.0f 
-v -1.0f  1.0f -1.0f 
-v -1.0f  1.0f  1.0f 
-v 1.0f  1.0f  1.0f 
-v -1.0f  1.0f  1.0f 
-v 1.0f -1.0f  1.0f
+v -0.5f -0.5f -0.5f  // triangle 1 : begin
+v -0.5f -0.5f  0.5f 
+v -0.5f  0.5f  0.5f  // triangle 1 : end
+v 0.5f  0.5f -0.5f  // triangle 2 : begin
+v -0.5f -0.5f -0.5f 
+v -0.5f  0.5f -0.5f  // triangle 2 : end
+v 0.5f -0.5f  0.5f 
+v -0.5f -0.5f -0.5f 
+v 0.5f -0.5f -0.5f 
+v 0.5f  0.5f -0.5f 
+v 0.5f -0.5f -0.5f 
+v -0.5f -0.5f -0.5f 
+v -0.5f -0.5f -0.5f 
+v -0.5f  0.5f  0.5f 
+v -0.5f  0.5f -0.5f 
+v 0.5f -0.5f  0.5f 
+v -0.5f -0.5f  0.5f 
+v -0.5f -0.5f -0.5f 
+v -0.5f  0.5f  0.5f 
+v -0.5f -0.5f  0.5f 
+v 0.5f -0.5f  0.5f 
+v 0.5f  0.5f  0.5f 
+v 0.5f -0.5f -0.5f 
+v 0.5f  0.5f -0.5f 
+v 0.5f -0.5f -0.5f 
+v 0.5f  0.5f  0.5f 
+v 0.5f -0.5f  0.5f 
+v 0.5f  0.5f  0.5f 
+v 0.5f  0.5f -0.5f 
+v -0.5f  0.5f -0.5f 
+v 0.5f  0.5f  0.5f 
+v -0.5f  0.5f -0.5f 
+v -0.5f  0.5f  0.5f 
+v 0.5f  0.5f  0.5f 
+v -0.5f  0.5f  0.5f 
+v 0.5f -0.5f  0.5f
